@@ -24,10 +24,10 @@ xor False x = x
 countCorrectPasswords :: [Bool] -> Int
 countCorrectPasswords = sum . map fromEnum
 
-evaluatePasswords :: ((Int, Int, Char, String) -> Bool) -> [String] -> Int
-evaluatePasswords f = countCorrectPasswords . map (f . convertEntry)
+evaluatePasswords :: ((Int, Int, Char, String) -> Bool) -> [String] -> String
+evaluatePasswords f = show . countCorrectPasswords . map (f . convertEntry)
 
-compute :: [String] -> [Int]
+compute :: [String] -> [String]
 compute x = map (`evaluatePasswords` x) [isPasswordValid1, isPasswordValid2]
 
-main = interact $ unlines . map show . compute . lines
+main = interact $ unlines . compute . lines
