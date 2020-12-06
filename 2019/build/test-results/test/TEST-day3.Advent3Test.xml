@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="day3.Advent3Test" tests="6" skipped="0" failures="0" errors="0" timestamp="2020-12-05T19:58:03" hostname="carrie" time="0.045">
+  <properties/>
+  <testcase name="find intersection 1-1" classname="day3.Advent3Test" time="0.003"/>
+  <testcase name="find intersection 1-2" classname="day3.Advent3Test" time="0.018"/>
+  <testcase name="find intersection 1-3" classname="day3.Advent3Test" time="0.009"/>
+  <testcase name="find intersection 2-1" classname="day3.Advent3Test" time="0.001"/>
+  <testcase name="find intersection 2-2" classname="day3.Advent3Test" time="0.003"/>
+  <testcase name="find intersection 2-3" classname="day3.Advent3Test" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

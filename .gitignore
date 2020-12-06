@@ -1,4 +1,5 @@
-**/*.hi
-**/*.o
-**/program
-**/*.txt
+2019/.gradle
+2019/.idea
+2019/out
+
+2020/**/*.txt
