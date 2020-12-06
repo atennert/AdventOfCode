@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="day1.Advent1-2Test" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-12-05T19:58:03" hostname="carrie" time="0.001">
-  <properties/>
-  <testcase name="check fuel simple" classname="day1.Advent1-2Test" time="0.0"/>
-  <testcase name="check fuel complex 1" classname="day1.Advent1-2Test" time="0.0"/>
-  <testcase name="check fuel complex 2" classname="day1.Advent1-2Test" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
