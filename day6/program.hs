@@ -17,7 +17,6 @@ getEveryonesYes :: [String] -> Int
 getEveryonesYes = sum . map (length . foldr1 intersect) . separateGroups
 
 compute :: [String] -> [String]
-compute x = map (`run` x) [getAnyonesYes, getEveryonesYes]
-  where run f = show . f
+compute x = map (show . ($ x)) [getAnyonesYes, getEveryonesYes]
 
 main = interact $ unlines . compute . lines
