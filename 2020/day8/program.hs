@@ -3,11 +3,11 @@ import Data.List.Split (splitOn)
 
 runCmd :: String -> (Int, Int, Int, [Int]) -> (Int, Int, Int, [Int])
 runCmd cmd (a, i, p, is)
-    | fixedKey == "acc" = (a + read fixedVal, i + 1, p, i:is)
-    | fixedKey == "jmp" = (a, i + read fixedVal, p, i:is)
+    | fixedKey == "acc" = (a + fixedVal, i + 1, p, i:is)
+    | fixedKey == "jmp" = (a, i + fixedVal, p, i:is)
     | fixedKey == "nop" = (a, i + 1, p, i:is)
   where [key, val] = splitOn " " cmd
-        fixedVal = filter (/= '+') val
+        fixedVal = read $ filter (/= '+') val
         fixedKey | i == p && key == "jmp" = "nop"
                  | i == p && key == "nop" = "jmp"
                  | otherwise              = key
