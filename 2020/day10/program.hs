@@ -30,10 +30,10 @@ tribonacci n = tribonacci (n - 1) + tribonacci (n - 2) + tribonacci (n - 3)
 -- part 2 inspired by https://dev.to/qviper/advent-of-code-2020-python-solution-day-10-30kd
 combinations' :: [Int] -> Int
 combinations' = c'' 0 [1, 0, 0]
-  where c'' _ stack []    = head stack
-        c'' e stack (l:ls)
-            | e+1 == l    = c'' (e+1) (sum stack : init stack) ls
-            | otherwise   = c'' (e+1) (        0 : init stack) (l:ls)
+  where c'' _ (b:_) []  = b
+        c'' e [b,u,f] (l:ls)
+            | e+1 == l  = c'' (e+1) [b+u+f, b, u] ls
+            | otherwise = c'' (e+1) [    0, b, u] (l:ls)
 
 -- basics
 prepareData :: [String] -> [Int]
