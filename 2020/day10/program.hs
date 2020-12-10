@@ -1,5 +1,6 @@
 import Data.List (sort)
 
+-- my initial solution for part 1
 findJoltDiffs :: [Int] -> Int
 findJoltDiffs (l:lx) = uncurry (*) $ count (0,0) l lx
   where count counts _ [] = counts
@@ -7,6 +8,7 @@ findJoltDiffs (l:lx) = uncurry (*) $ count (0,0) l lx
                                 | la+3 == l = count (mi,ma+1) l ls
                                 | otherwise = count (mi,ma) l ls
 
+-- my initial solution for part 2
 combinations :: [Int] -> Int
 combinations [] = 1
 combinations [x] = 1
@@ -25,10 +27,19 @@ tribonacci 2 = 4
 tribonacci 3 = 7
 tribonacci n = tribonacci (n - 1) + tribonacci (n - 2) + tribonacci (n - 3)
 
+-- part 2 inspired by https://dev.to/qviper/advent-of-code-2020-python-solution-day-10-30kd
+combinations' :: [Int] -> Int
+combinations' = c'' 0 [1, 0, 0]
+  where c'' _ stack []    = head stack
+        c'' e stack (l:ls)
+            | e+1 == l    = c'' (e+1) (sum stack : init stack) ls
+            | otherwise   = c'' (e+1) (        0 : init stack) (l:ls)
+
+-- basics
 prepareData :: [String] -> [Int]
-prepareData = (\x -> x ++ [last x + 3]) . (0:) . sort . map read
+prepareData = (\x -> x ++ [last x + 3]) . sort . map read
 
 compute :: [String] -> [String]
-compute x = map (show . ($ prepareData x)) [findJoltDiffs, combinations]
+compute x = map (show . ($ prepareData x)) [findJoltDiffs, combinations . (0:), combinations']
 
 main = interact $ unlines . compute . lines
