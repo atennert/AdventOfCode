@@ -16,14 +16,14 @@ applyRules2 (lenX, lenY) seats = chunksOf (lenX+1) . map (rules seat (filter isO
   where seat (x,y) = (seats!!y)!!x
         isOccupied = head . foldr ((\s l -> if s == '.' then l else (s == '#'):l) . seat) [False]
         posAround (pX, pY) = [
-              if               pY == 0    then [] else [(pX,pY-i)   | i <- [1..pY]],
-              if pX == lenX || pY == 0    then [] else [(pX+i,pY-i) | i <- [1..(min lenX lenY)], pX+i<=lenX, pY-i>=0],
-              if pX == lenX               then [] else [(x,pY)      | x <- [(pX+1)..lenX]],
-              if pX == lenX || pY == lenY then [] else [(pX+i,pY+i) | i <- [1..(min lenX lenY)], pX+i<=lenX, pY+i<=lenY],
-              if               pY == lenY then [] else [(pX,y)      | y <- [(pY+1)..lenY]],
-              if pX == 0    || pY == lenY then [] else [(pX-i,pY+i) | i <- [1..(min lenX lenY)], pX-i>=0,    pY+i<=lenY],
-              if pX == 0                  then [] else [(pX-i,pY)   | i <- [1..pX]],
-              if pX == 0    || pY == 0    then [] else [(pX-i,pY-i) | i <- [1..(min lenX lenY)], pX-i>=0,    pY-i>=0]]
+              [(pX,  pY-i) | i <- [1..pY],              pY-i>=0],
+              [(pX+i,pY-i) | i <- [1..(min lenX lenY)], pX+i<=lenX, pY-i>=0],
+              [(pX+i,pY)   | i <- [1..lenX],            pX+i<=lenX],
+              [(pX+i,pY+i) | i <- [1..(min lenX lenY)], pX+i<=lenX, pY+i<=lenY],
+              [(pX,  pY+i) | i <- [1..lenY],            pY+i<=lenY],
+              [(pX-i,pY+i) | i <- [1..(min lenX lenY)], pX-i>=0,    pY+i<=lenY],
+              [(pX-i,pY)   | i <- [1..pX],              pX-i>=0],
+              [(pX-i,pY-i) | i <- [1..(min lenX lenY)], pX-i>=0,    pY-i>=0]]
 
 run :: ((Int, Int) -> [String] -> [(Int, Int)] -> [String]) -> [String] -> [String]
 run applyRules seats = run' [] seats
