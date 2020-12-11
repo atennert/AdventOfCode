@@ -1,22 +1,20 @@
 import Data.List.Split (chunksOf)
 
-applyRules1 :: (Int, Int) -> [(Int, Int)] -> [String] -> [String]
-applyRules1 (lenX, lenY) positions seats = chunksOf (lenX+1) $ map rules positions
-  where rules (pX, pY) | ((seats!!pY)!!pX == 'L') && not (any isOccup $ posAround (pX, pY))           = '#'
-                       | ((seats!!pY)!!pX == '#') && length (filter isOccup $ posAround (pX, pY)) > 3 = 'L'
-                       | otherwise                                                                    = (seats!!pY)!!pX
-        isOccup (pX, pY) = (seats!!pY)!!pX == '#'
+rules :: ((Int, Int) -> Char) -> ((Int, Int) -> [t]) -> Int -> (Int, Int) -> Char
+rules seat posCheck tol p | (seat p == 'L') && null   (posCheck p)       = '#'
+                          | (seat p == '#') && length (posCheck p) > tol = 'L'
+                          | otherwise                                    = seat p
+
+applyRules1 :: (Int, Int) -> [String] -> [(Int, Int)] -> [String]
+applyRules1 (lenX, lenY) seats = chunksOf (lenX+1) . map (rules seat (filter isOccupied . posAround) 3)
+  where seat (x,y) = (seats!!y)!!x
+        isOccupied = (== '#') . seat
         posAround (pX, pY) = [(x,y) | x <- [(max 0 (pX-1))..(min lenX (pX+1))], y <- [(max 0 (pY-1))..(min lenY (pY+1))], (x,y) /= (pX,pY)]
 
-applyRules2 :: (Int, Int) -> [(Int, Int)] -> [String] -> [String]
-applyRules2 (lenX, lenY) positions seats = chunksOf (lenX+1) $ map rules positions
-  where rules (pX, pY) | ((seats!!pY)!!pX == 'L') && not (any isOccup $ posAround (pX, pY))           = '#'
-                       | ((seats!!pY)!!pX == '#') && length (filter isOccup $ posAround (pX, pY)) > 4 = 'L'
-                       | otherwise                                                                    = (seats!!pY)!!pX
-        isOccup [] = False
-        isOccup ((pX,pY):ls) | (seats!!pY)!!pX == '#' = True
-                             | (seats!!pY)!!pX == 'L' = False
-                             | otherwise              = isOccup ls
+applyRules2 :: (Int, Int) -> [String] -> [(Int, Int)] -> [String]
+applyRules2 (lenX, lenY) seats = chunksOf (lenX+1) . map (rules seat (filter isOccupied . posAround) 4)
+  where seat (x,y) = (seats!!y)!!x
+        isOccupied = head . foldr ((\s l -> if s == '.' then l else (s == '#'):l) . seat) [False]
         posAround (pX, pY) = [
               if               pY == 0    then [] else [(pX,pY-i)   | i <- [1..pY]],
               if pX == lenX || pY == 0    then [] else [(pX+i,pY-i) | i <- [1..(min lenX lenY)], pX+i<=lenX, pY-i>=0],
@@ -27,13 +25,13 @@ applyRules2 (lenX, lenY) positions seats = chunksOf (lenX+1) $ map rules positio
               if pX == 0                  then [] else [(pX-i,pY)   | i <- [1..pX]],
               if pX == 0    || pY == 0    then [] else [(pX-i,pY-i) | i <- [1..(min lenX lenY)], pX-i>=0,    pY-i>=0]]
 
-run :: ((Int, Int) -> [(Int, Int)] -> [String] -> [String]) -> [String] -> [String]
+run :: ((Int, Int) -> [String] -> [(Int, Int)] -> [String]) -> [String] -> [String]
 run applyRules seats = run' [] seats
   where (lenX,lenY) = (length (head seats) - 1, length seats - 1)
         positions = [(x,y) | y <- [0..lenY], x <- [0..lenX]]
         run' oldSeats seats
               | seats == oldSeats = seats
-              | otherwise         = run' seats $ applyRules (lenX, lenY) positions seats
+              | otherwise         = run' seats $ applyRules (lenX, lenY) seats positions
 
 sumOccupied :: [String] -> Int
 sumOccupied = length . filter ('#' ==) . unlines
