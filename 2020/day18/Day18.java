@@ -79,7 +79,6 @@ public class Day18 {
 				String[] addParts = add.split(" ");
 				String result = Long.toString(Long.parseLong(addParts[0]) + Long.parseLong(addParts[2]));
 				line = addMatcher.replaceFirst(result);
-				System.out.println("ADD " + line);
 				continue;
 			}
 
@@ -92,7 +91,6 @@ public class Day18 {
 					lres *= Long.parseLong(mulParts[i]);
 				String result = Long.toString(lres);
 				line = mupMatcher.replaceFirst(result);
-				System.out.println("MUP " + line);
 				continue;
 			}
 
@@ -103,7 +101,6 @@ public class Day18 {
 				String par = parMatcher.group();
 				String result = par.substring(1, par.length() - 1);
 				line = parMatcher.replaceFirst(result);
-				System.out.println("PAR " + line);
 				parMatcher = PAR.matcher(line);
 			}
 			if (found) continue;
@@ -114,7 +111,6 @@ public class Day18 {
 				String[] mulParts = mul.split(" ");
 				String result = Long.toString(Long.parseLong(mulParts[0]) * Long.parseLong(mulParts[2]));
 				line = mulMatcher.replaceFirst(result);
-				System.out.println("MUL " + line);
 				continue;
 			}
 			break;
