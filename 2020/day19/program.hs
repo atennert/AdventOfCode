@@ -1,15 +1,13 @@
 import Data.IntMap (IntMap, fromList, (!))
 import Data.List.Split (splitOn)
-import Data.List (isPrefixOf)
-import Data.Maybe (isJust, fromJust)
 
 data Tree a = Leaf | Node {
   content :: a,
   next    :: [Tree a]
 } deriving Show
 
-run1 :: ([Tree String], [String]) -> Int
-run1 (rules, msgs) = length $ filter check msgs
+run :: ([Tree String], [String]) -> Int
+run (rules, msgs) = length $ filter check msgs
   where check msg = any (check' msg) rules
         check' msg    Leaf       = null msg
         check' []     _          = False
@@ -34,6 +32,6 @@ bt rules (r:rs)
 
 
 compute :: [String] -> [String]
-compute x = map (show . ($ convert x)) [run1]
+compute x = map (show . ($ convert x)) [run]
 
 main = interact $ unlines . compute . lines
