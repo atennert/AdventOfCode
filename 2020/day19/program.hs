@@ -12,6 +12,7 @@ run1 :: ([Tree String], [String]) -> Int
 run1 (rules, msgs) = length $ filter check msgs
   where check msg = any (check' msg) rules
         check' msg    Leaf       = null msg
+        check' []     _          = False
         check' (m:ms) (Node c n) = [m] == c && any (check' ms) n
 
 convert :: [String] -> ([Tree String], [String])
