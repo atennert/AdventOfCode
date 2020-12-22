@@ -1,6 +1,6 @@
 import Data.List.Split (splitOn)
 import Data.List (isPrefixOf)
-import Data.Bifunctor (bimap, second, first)
+import Data.Bifunctor (second, first)
 import Data.Map (Map, empty, insert, elems)
 import Data.Bits (setBit, clearBit, (.|.), (.&.))
 
