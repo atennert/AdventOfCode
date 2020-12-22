@@ -1,7 +1,6 @@
 import java.io.FileInputStream;
 import java.util.List;
 import java.util.Scanner;
-
 import java.util.ArrayList;
 
 public class Day20 {
@@ -145,14 +144,6 @@ public class Day20 {
         return map;
     }
 
-    static void printMap(char[][] map) {
-        StringBuilder sb = new StringBuilder();
-        for (char[] mapLine : map) {
-            sb.append(mapLine).append("\n");
-        }
-        System.out.println(sb.toString() + "\n\n");
-    }
-
     static char[][] rotate(char[][] img) {
         char[][] newImg = new char[img.length][img.length];
         for (int y = 0, z = img.length - 1; y < img.length; y++, z--) {
@@ -254,20 +245,6 @@ public class Day20 {
                 return false;
             }
             return ((Tile) obj).id == this.id;
-        }
-
-        @Override
-        public int hashCode() {
-            return this.id;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder().append(id + ":\n");
-            for (char[] imgLine : img) {
-                sb.append(imgLine).append("\n");
-            }
-            return sb.toString();
         }
 
         public long getId() {
