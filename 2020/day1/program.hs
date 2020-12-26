@@ -1,7 +1,5 @@
+import Control.Arrow ((&&&))
 import Data.Maybe
-
-getNumbers :: String -> [Int]
-getNumbers s = map read (lines s)
 
 findResult2 :: [Int] -> Int
 findResult2 (l:ls) = fromMaybe (findResult2 ls) runCheck
@@ -20,10 +18,8 @@ findResult3 (l:ls) = fromMaybe (findResult3 ls) runCheck1
         runCheck2 s (j:js) = checkSum2 (2020 - s) j js
         runCheck1 = checksum1 l ls
 
-compute :: ([Int] -> Int) -> String -> String
-compute f = show . f . getNumbers
+convert :: [String] -> [Int]
+convert = map read
 
-results :: String -> [String]
-results x = map (`compute` x) [findResult2, findResult3]
-
-main = interact $ unlines . results
+main = interact $ show . compute . convert . lines
+  where compute = findResult2 &&& findResult3

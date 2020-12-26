@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List (elemIndices)
 
 run1 :: [(Char, Int)] -> (Int, Int)
@@ -32,7 +33,5 @@ manhatten (a,b) = abs a + abs b
 convert :: [String] -> [(Char, Int)]
 convert = map (\l -> (head l, read $ tail l))
 
-compute :: [(Char, Int)] -> [String]
-compute x = map (show . manhatten . ($ x)) [run1, run2]
-
-main = interact $ unlines . compute . convert . lines
+main = interact $ show . compute . convert . lines
+  where compute = manhatten . run1 &&& manhatten . run2

@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List (isPrefixOf, findIndices)
 import Data.List.Split (splitOn)
 
@@ -26,7 +27,5 @@ runFixing cmds = run' $ nextP (-1)
         nextP p = head $ filter (> p) jmpNops
         jmpNops = findIndices (\e -> isPrefixOf "jmp" e || isPrefixOf "nop" e) cmds
 
-compute :: [String] -> [String]
-compute x = map (show . ($ x)) [run (0, 0, -1, []), runFixing]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . lines
+  where compute = run (0, 0, -1, []) &&& runFixing

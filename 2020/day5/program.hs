@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List (sort)
 
 getSeat :: String -> (Int, Int)
@@ -17,8 +18,5 @@ getLast = maximum . map (getSeatId . getSeat)
 getMySeat :: [String] -> Int
 getMySeat = findEmptySeat . sort . map (getSeatId . getSeat)
 
-compute :: [String] -> [String]
-compute x = map (`run` x) [getLast, getMySeat]
-  where run f = show . f
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . lines
+  where compute = getLast &&& getMySeat

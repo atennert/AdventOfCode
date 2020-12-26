@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 
 index = [0, 0, 0, 0, 0]
 slopes = [(1,1), (3,1), (5,1), (7,1), (1,2)]
@@ -29,8 +30,5 @@ countTrees2' len (xs,y) (l:ls) =
       newXs = zipWith3 (\x s u -> if u then x+s else x) xs (map fst slopes) use
   in countTrees2' len (newXs, y+1) ls `addL` values
 
-compute :: [String] -> [String]
-compute x = map (`count` x) [countTrees1, countTrees2]
-  where count f = show . f
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . lines
+  where compute = countTrees1 &&& countTrees2

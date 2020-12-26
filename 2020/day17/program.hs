@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List (nub)
 
 run :: (Eq a) => (a -> [a]) -> Int -> [a] -> Int
@@ -20,7 +21,5 @@ convert2 = c' 0
   where c' _ [] = []
         c' i (l:ls) = foldr (\(j,c) r -> if c=='#' then (j,i,0,0):r else r) [] (zip [0..] l) ++ c' (i+1) ls
 
-compute :: [String] -> [String]
-compute x = map (show . ($ x)) [run1 combs1 6 . convert1, run1 combs2 6 . convert2]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . lines
+  where compute = run combs1 6 . convert1 &&& run combs2 6 . convert2

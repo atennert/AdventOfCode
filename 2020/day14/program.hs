@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List.Split (splitOn)
 import Data.List (isPrefixOf)
 import Data.Bifunctor (second, first)
@@ -34,7 +35,5 @@ convertMask2 ms = (orMask, combinations xMask)
         combinations [] = [[]]
         combinations (l:ls) = map (l:) (combinations ls) ++ combinations ls
 
-compute :: [String] -> [String]
-compute x = map (show . ($ x)) [run1 empty (0,0), run2 empty (0,[])]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . lines
+  where compute = run1 empty (0,0) &&& run2 empty (0,[])

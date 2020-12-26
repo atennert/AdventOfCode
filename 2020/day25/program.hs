@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 
 transform val sn = (val * sn) `rem` 20201227
 
@@ -14,7 +15,5 @@ encKey [(_,ls),(pk,_)] = transform' ls 1
 convert :: [String] -> [Int]
 convert = map read
 
-compute :: [String] -> [String]
-compute x = Prelude.map (show . ($ convert x)) [encKey . loopSize]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . convert . lines
+  where compute = encKey . loopSize

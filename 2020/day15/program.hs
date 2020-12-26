@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.IntMap (IntMap, fromList, insert, size, member, (!))
 import Data.List.Split (splitOn)
 
@@ -14,7 +15,5 @@ run max (l, m) = run' (size m) l m
 convert :: [String] -> (Int, IntMap [Int])
 convert (s:_) = (\l -> (fst $ head l, fromList l)) $ reverse $ zipWith (\i x -> (read x,[-1,i])) [0..] (splitOn "," s)
 
-compute :: [String] -> [String]
-compute x = map (show . ($ convert x)) [run 2020, run 30000000]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . convert . lines
+  where compute = run 2020 &&& run 30000000

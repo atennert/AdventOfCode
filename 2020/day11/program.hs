@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List.Split (chunksOf)
 
 rules :: ((Int, Int) -> Char) -> ((Int, Int) -> [t]) -> Int -> (Int, Int) -> Char
@@ -36,7 +37,5 @@ run applyRules seats = run' [] seats
 sumOccupied :: [String] -> Int
 sumOccupied = length . filter ('#' ==) . unlines
 
-compute :: [String] -> [String]
-compute x = map (show . sumOccupied . (`run` x)) [applyRules1, applyRules2]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . lines
+  where compute = sumOccupied . run applyRules1 &&& sumOccupied . run applyRules2

@@ -1,5 +1,3 @@
-package de.tracetronic.ttstm.execution;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import java.util.Set;
 
 public class Day8 {
 	public static void main(String[] args) {
-		try (Scanner in = new Scanner(new FileInputStream("C:\\Users\\Andreas\\Desktop\\data.txt"))) {
+		try (Scanner in = new Scanner(new FileInputStream("day8/code.txt"))) {
 			List<String> commands = new ArrayList<>(650);
 			while (in.hasNextLine()) {
 				commands.add(in.nextLine());

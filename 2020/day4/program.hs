@@ -1,10 +1,11 @@
+import Control.Arrow ((&&&))
 import Data.List.Split (splitOn)
 import Data.List (isSuffixOf)
 import Data.Char (isDigit, isHexDigit)
 import Data.Maybe (fromJust, isJust)
 
-normalize :: [String] -> [String]
-normalize = foldr merge [""]
+convert :: [String] -> [String]
+convert = foldr merge [""]
   where merge e (l:ls) | null e    = "":l:ls
                        | otherwise = (e ++ " " ++ l) : ls
 
@@ -41,8 +42,5 @@ getValidPassports2 (l:ls) = getValidPassports2 ls + fromEnum isFine
         ppfs   = map ((\(k,v) -> (k, tail v)) . splitAt 3) $ splitOn " " l
         ppf k  = lookup k ppfs
 
-compute :: [String] -> [String]
-compute x = map (`count` x) [getValidPassports1, getValidPassports2]
-  where count f = show . f
-
-main = interact $ unlines . compute . normalize . lines
+main = interact $ show . compute . convert . lines
+  where compute = getValidPassports1 &&& getValidPassports2

@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.Bifunctor (bimap)
 
 type Card = Int
@@ -31,7 +32,5 @@ convert :: [String] -> ([Card], [Card])
 convert = bimap c (c . tail) . break null
   where c = map read . tail
 
-compute :: [String] -> [String]
-compute x = map (show . ($ convert x)) [uncurry play2, uncurry play2]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . convert . lines
+  where compute = uncurry play1 &&& uncurry play2

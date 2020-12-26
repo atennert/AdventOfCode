@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List (isPrefixOf, sort)
 import Data.Set as S (Set, fromList, toList, size, filter, member, union, map)
 
@@ -32,7 +33,5 @@ getTile path | "e"  `isPrefixOf` path = add (1,-1,0) $ getTile $ tail path
              | "sw" `isPrefixOf` path = add (-1,0,1) $ getTile $ drop 2 path
              | "ne" `isPrefixOf` path = add (1,0,-1) $ getTile $ drop 2 path
 
-compute :: [String] -> [String]
-compute x = Prelude.map (show . length . ($ convert x)) [blackTiles, flipping 100 . fromList . blackTiles]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . convert . lines
+  where compute = length . blackTiles &&& length . flipping 100 . fromList . blackTiles

@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List.Split (splitOn)
 import Data.Bifunctor (second)
 
@@ -16,7 +17,5 @@ timestamp = findTs 1 0
 convert2 :: [String] -> [(Int, Int)]
 convert2 [_,ids] = map (second read) $ filter ((/="x") . snd) $ zip [0..] $ splitOn "," ids
 
-compute :: [String] -> [String]
-compute x = map (show . ($ x)) [idAndTime . convert1, timestamp . convert2]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . lines
+  where compute = idAndTime . convert1 &&& timestamp . convert2

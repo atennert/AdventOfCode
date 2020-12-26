@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.Set (Set)
 import Data.Map (Map)
 import Data.Map as M (empty, insertWith, foldr, filter, map, union, null, elems)
@@ -30,7 +31,5 @@ convert = Prelude.foldr (analyze . splitOn " (contains ") ([], M.empty)
           (splitOn " " ingredients ++ il, Prelude.foldr (\a -> M.insertWith (++) a [makeSet ingredients]) map $ splitOn ", " $ init allergens)
         makeSet = S.fromList . splitOn " "
 
-compute :: [String] -> [String]
-compute x = Prelude.map ($ convert x) [part1, part2]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . convert . lines
+  where compute = part1 &&& part2

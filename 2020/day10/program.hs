@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.List (sort)
 
 -- my initial solution for part 1
@@ -35,11 +36,8 @@ combinations' = c'' 0 [1, 0, 0]
             | e+1 == l  = c'' (e+1) [b+u+f, b, u] ls
             | otherwise = c'' (e+1) [    0, b, u] (l:ls)
 
--- basics
-prepareData :: [String] -> [Int]
-prepareData = (\x -> x ++ [last x + 3]) . sort . map read
+convert :: [String] -> [Int]
+convert = (\x -> x ++ [last x + 3]) . sort . map read
 
-compute :: [String] -> [String]
-compute x = map (show . ($ prepareData x)) [findJoltDiffs, combinations . (0:), combinations']
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . convert . lines
+  where compute = findJoltDiffs &&& combinations' -- combinations . (0:)

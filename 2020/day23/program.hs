@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 type Cup = Int
 
 run' :: Int -> Int -> [Cup] -> [Cup]
@@ -20,7 +21,5 @@ convert (l:_) = map (\c -> read [c]) l
 attachMil :: [Cup] -> [Cup]
 attachMil cups = cups ++ [c | c <- [(1 + maximum cups)..1000000]]
 
-compute :: [String] -> [String]
-compute x = map (show . ($ convert x)) [run1 100, run2 10000000 . attachMil]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . convert . lines
+  where compute = run1 100 &&& run2 10000000 . attachMil

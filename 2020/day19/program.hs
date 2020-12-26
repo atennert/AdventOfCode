@@ -1,3 +1,4 @@
+import Control.Arrow ((&&&))
 import Data.IntMap (IntMap, fromList, (!))
 import Data.List.Split (splitOn)
 
@@ -30,8 +31,5 @@ bt rules (r:rs)
         newRules ar = (map read . splitOn " ") ar ++ rs
         rPath i = bt rules (newRules (r'!!i))
 
-
-compute :: [String] -> [String]
-compute x = map (show . ($ convert x)) [run]
-
-main = interact $ unlines . compute . lines
+main = interact $ show . compute . convert . lines
+  where compute = run
