@@ -1,7 +1,8 @@
 #!/usr/bin/env kscript
 
-fun doStuff(): String {
-    return "Solution"
-}
+var line = ""
+while (true) {
+    line = readlnOrNull() ?: break
 
-println(doStuff())
+    println(line)
+}
