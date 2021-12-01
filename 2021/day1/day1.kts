@@ -1,13 +1,4 @@
-//#!/usr/bin/env kscript
-
-import java.nio.file.Files
-import java.nio.file.Path
-
-/*while (true) {
-    line = readlnOrNull() ?: break
-
-    println(line)
-}*/
+#!/usr/bin/env kscript
 
 class Window(private val values: List<Int?> = listOf(null, null, null)) {
     fun add(value: Int): Window = Window(listOf(values[1], values[2], value))
@@ -30,8 +21,8 @@ var increases1 = 0
 var increases2 = 0
 var lastDepth: Int? = null
 var lastWindow = Window()
-for (line in Files.readAllLines(Path.of("input.txt"))) {
-    val newDepth = line.toInt()
+while (true) {
+    val newDepth = readlnOrNull()?.toInt() ?: break
     val newWindow = lastWindow.add(newDepth)
 
     lastDepth?.let {
