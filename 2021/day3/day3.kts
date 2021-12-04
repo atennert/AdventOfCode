@@ -1,12 +1,13 @@
-import java.nio.file.Files
-import java.nio.file.Path
+#!/usr/bin/env kscript
 
-val mostCommon = Files.lines(Path.of("input.txt"))
-    .map(String::toCharArray)
-    .map { it.map(Char::digitToInt)
-        .map { i -> if (i == 0) -1 else i } }
-    .reduce { a, b -> a.zip(b) { x, y -> x + y } }
-    .get()
+var mostCommon = listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+while (true) {
+    mostCommon = readlnOrNull()
+        ?.toCharArray()
+        ?.map(Char::digitToInt)
+        ?.map { if (it == 0) -1 else it }
+        ?.zip(mostCommon) { a, b -> a + b } ?: break
+}
 
 var gammaRate = 0
 var epsilonRate = 0
