@@ -38,45 +38,22 @@ class Line(input: String) {
 
 fun String.toLine() = Line(this)
 
+fun <T> MutableMap<T, Int>.increment(points: List<T>) = points.forEach { t -> this[t] = (this[t] ?: 0) + 1 }
+
+fun <T> MutableMap<T, Int>.countOverlapping() = this.values.count { it > 1 }
+
 val allPoints = mutableMapOf<Pair<Int, Int>, Int>()
 val allPoints2 = mutableMapOf<Pair<Int, Int>, Int>()
+
 while (true) {
     val line = readlnOrNull()?.toLine() ?: break
 
     if (line.isVerticalOrHorizontal()) {
-        val points = line.getPoints()
-        for (point in points) {
-            if (allPoints.containsKey(point)) {
-                allPoints[point] = allPoints[point]!! + 1
-            } else {
-                allPoints[point] = 1
-            }
-        }
+        allPoints.increment(line.getPoints())
     }
 
-    val points = line.getPoints()
-    for (point in points) {
-        if (allPoints2.containsKey(point)) {
-            allPoints2[point] = allPoints2[point]!! + 1
-        } else {
-            allPoints2[point] = 1
-        }
-    }
+    allPoints2.increment(line.getPoints())
 }
 
-var overlappingCount = 0
-for ((_, value) in allPoints) {
-    if (value > 1) {
-        overlappingCount += 1
-    }
-}
-
-var overlappingCount2 = 0
-for ((_, value) in allPoints2) {
-    if (value > 1) {
-        overlappingCount2 += 1
-    }
-}
-
-println("overlapping: $overlappingCount")
-println("overlapping: $overlappingCount2")
+println("overlapping: ${allPoints.countOverlapping()}")
+println("overlapping: ${allPoints2.countOverlapping()}")
