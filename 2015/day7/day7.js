@@ -1,7 +1,7 @@
 const fs = require('fs')
 const readline = require('readline')
 
-function run(lastResult, resolve) {
+function run(lastResult, resolve = () => {}) {
     let file = readline.createInterface({
         input: fs.createReadStream('input.txt'),
         output: process.stdout,
@@ -96,4 +96,4 @@ function run(lastResult, resolve) {
 }
 
 new Promise((resolve => run(undefined, resolve)))
-    .then(lastResult => run(lastResult, () => {}))
+    .then(lastResult => run(lastResult))
