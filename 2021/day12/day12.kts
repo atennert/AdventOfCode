@@ -30,12 +30,10 @@ fun visitCaves(visitedCaves: List<String>, ignoreCondition: (String, List<String
         ?.flatMap { visitCaves(visitedCaves + it, ignoreCondition) } ?: listOf()
 }
 
-println("routes: ${caveMap["start"]
-    ?.flatMap { visitCaves(listOf(it)) { s, vc ->
+println("routes: ${visitCaves(listOf("start")) { s, vc ->
         s.isLowerCase() && vc.contains(s)
-    } }?.size}")
-println("more routes: ${caveMap["start"]
-    ?.flatMap { visitCaves(listOf(it)) { s, vc ->
+    }.size}")
+println("more routes: ${visitCaves(listOf("start")) { s, vc ->
         val lowerVc = vc.filter { s1 -> s1.isLowerCase() }
         s.isLowerCase() && lowerVc.contains(s) && lowerVc.hasDouble()
-    } }?.size}")
+    }.size}")
