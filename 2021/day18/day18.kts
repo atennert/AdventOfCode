@@ -116,6 +116,7 @@ fun SNNumber.split(): SNNumber {
             this.replaceRight(right.split())
             this
         }
+        else -> error("")
     }
 }
 

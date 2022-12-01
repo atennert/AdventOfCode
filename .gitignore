@@ -5,6 +5,7 @@
 
 /**/*.txt
 
+**/node_modules
 lib
 out
 
