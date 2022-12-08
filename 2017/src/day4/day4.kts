@@ -7,10 +7,7 @@ println(Files.lines(Path.of("input.txt"))
     .reduce(
         Pair(0, 0),
         { (p1, p2), (e1, e2) -> Pair(p1 + if (e1) 1 else 0, p2 + if (e2) 1 else 0)},
-        { (p11, p12), (p21, p22) ->
-            println("$p11 $p12 $p21 $p22")
-            Pair(p11 + p21, p12 + p22)
-        }
+        { (p11, p12), (p21, p22) -> Pair(p11 + p21, p12 + p22) }
     ))
 
 fun hasAnagram(it: List<String>): Boolean {
