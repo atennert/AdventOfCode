@@ -21,7 +21,7 @@ val map = mutableListOf<List<Tree>>()
 
 while (true) {
     val line = readlnOrNull() ?: break
-    map.add(line.split("").filter { it != "" }.map { Tree(it.toInt()) })
+    map.add(line.toCharArray().map { Tree(it.digitToInt()) })
 }
 
 for (y in 0 until map.size) {
