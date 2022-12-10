@@ -1,3 +1,5 @@
+package day5
+
 import java.nio.file.Files
 import java.nio.file.Path
 

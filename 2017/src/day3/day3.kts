@@ -1,3 +1,5 @@
+package day3
+
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.math.abs
