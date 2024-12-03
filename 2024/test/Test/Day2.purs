@@ -3,9 +3,7 @@ module Test.Day2 where
 import Prelude
 import Test.Assert (assertEqual)
 import Node.Encoding (Encoding(UTF8))
-import Data.Functor ((<$>))
 import Day2 (day2_1, day2_2)
-import Data.Unit (Unit)
 import Effect (Effect)
 import Node.FS.Sync (readTextFile)
 

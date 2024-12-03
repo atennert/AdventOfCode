@@ -2,9 +2,7 @@ module Day2 where
 
 import Prelude
 import Effect (Effect)
-import Data.Unit (Unit)
 import Node.FS.Sync (readTextFile)
-import Data.Show (show)
 import Node.Encoding (Encoding(UTF8))
 import Effect.Console (log)
 import Data.List.Types (List(Nil), (:))
