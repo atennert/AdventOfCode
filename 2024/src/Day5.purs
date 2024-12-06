@@ -10,10 +10,8 @@ import Data.List.Types (List(Nil), (:))
 import JS.Map.Primitive (Map, alter, lookup)
 import JS.Map.Primitive.ST as STM
 import Data.Set (Set, insert, member, singleton)
-import Data.String (split) as S
-import Data.String.Pattern (Pattern(..))
-import Data.List (filter, fromFoldable, head, last, length, sortBy, (!!))
-import Utils (strToInt)
+import Data.List (filter, head, last, length, sortBy, (!!))
+import Utils (split, strToInt)
 import Data.Maybe (Maybe(Just, Nothing))
 import Data.Foldable (or, sum)
 import Data.Ordering (Ordering(EQ))
@@ -34,9 +32,6 @@ day5_2 input = sum <<< map getMiddle <<< sortPages <<< filterUnsorted <<< parse 
 
 type Page = Int
 type Rules = Map Page (Set Page)
-
-split :: String -> String -> List String
-split sep = fromFoldable <<< S.split (Pattern sep)
 
 parse :: String -> Tuple Rules (List (List Page))
 parse input =
