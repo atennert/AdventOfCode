@@ -5,7 +5,9 @@ import Data.Maybe (Maybe(Just, Nothing))
 import Data.Int (fromString)
 import Data.Tuple (Tuple(Tuple))
 import Data.List.Types (List(Nil))
-import Data.List (concat, length, (!!), (..))
+import Data.List (concat, fromFoldable, length, updateAt, (!!), (..))
+import Data.String (split) as S
+import Data.String.Pattern (Pattern(..))
 
 
 strToInt :: String -> Int
@@ -26,3 +28,15 @@ coords m =
                 Just l -> 0 .. ((length l) - 1)
                 Nothing -> Nil
     in concat <<< map (\y -> map (\x -> Tuple x y) $ xs y) $ ys
+
+split :: String -> String -> List String
+split sep = fromFoldable <<< S.split (Pattern sep)
+
+mark :: forall a. List (List a) -> Tuple Int Int -> a -> List (List a)
+mark l (Tuple x y) e = case l !! y of
+    Just ly -> case updateAt x e ly of
+        Just newLy -> case updateAt y newLy l of
+            Just newL -> newL
+            Nothing -> l
+        Nothing -> l
+    Nothing -> l
