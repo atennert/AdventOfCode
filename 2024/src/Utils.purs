@@ -8,12 +8,18 @@ import Data.List.Types (List(Nil))
 import Data.List (concat, fromFoldable, length, updateAt, (!!), (..))
 import Data.String (split) as S
 import Data.String.Pattern (Pattern(..))
+import JS.BigInt (BigInt, fromString, fromInt) as B
 
 
 strToInt :: String -> Int
 strToInt n = case fromString n of
     Just x -> x
     Nothing -> 0
+
+strToBigInt :: String -> B.BigInt
+strToBigInt n = case B.fromString n of
+    Just x -> x
+    Nothing -> B.fromInt 0
 
 at :: forall a. List (List a) -> (Tuple Int Int) -> Maybe a
 at m (Tuple x y) =
