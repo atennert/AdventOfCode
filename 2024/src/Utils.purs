@@ -4,7 +4,7 @@ import Prelude
 import Data.Maybe (Maybe(Just, Nothing))
 import Data.Int (fromString)
 import Data.Tuple (Tuple(Tuple))
-import Data.List.Types (List(Nil))
+import Data.List.Types (List(Nil), (:))
 import Data.List (concat, fromFoldable, length, updateAt, (!!), (..))
 import Data.String (split) as S
 import Data.String.Pattern (Pattern(..))
@@ -46,3 +46,12 @@ mark l (Tuple x y) e = case l !! y of
             Nothing -> l
         Nothing -> l
     Nothing -> l
+
+sizeRect :: forall a. List (List a) -> Tuple Int Int
+sizeRect Nil = Tuple 0 0
+sizeRect ll@(l:_) = Tuple (length l) (length ll)
+
+isInRect :: forall a. List (List a) -> Tuple Int Int -> Boolean
+isInRect rect (Tuple x y) =
+    let (Tuple lenX lenY) = sizeRect rect
+    in x >= 0 && x < lenX && y >= 0 && y < lenY
