@@ -38,6 +38,9 @@ coords m =
 split :: String -> String -> List String
 split sep = fromFoldable <<< S.split (Pattern sep)
 
+splitA :: String -> String -> Array String
+splitA sep = S.split (Pattern sep)
+
 mark :: forall a. List (List a) -> Tuple Int Int -> a -> List (List a)
 mark l (Tuple x y) e = case l !! y of
     Just ly -> case updateAt x e ly of

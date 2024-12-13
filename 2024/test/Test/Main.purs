@@ -11,6 +11,7 @@ import Test.Day5 (day5Tests)
 import Test.Day6 (day6Tests)
 import Test.Day7 (day7Tests)
 import Test.Day8 (day8Tests)
+import Test.Day9 (day9Tests)
 
 main :: Effect Unit
 main = do
@@ -22,3 +23,4 @@ main = do
   day6Tests
   day7Tests
   day8Tests
+  day9Tests
