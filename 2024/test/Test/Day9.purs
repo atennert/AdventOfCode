@@ -5,9 +5,10 @@ import Test.Assert (assertEqual)
 import Node.Encoding (Encoding(UTF8))
 import Effect (Effect)
 import Node.FS.Sync (readTextFile)
-import Day9 (Block(Data, Space), Triple(Triple), day9_1, day9_2, runBlock1)
+import Day9 (Block(Data, Space), day9_1, day9_2, runBlock1)
 import JS.BigInt (fromInt)
 import Data.Maybe (Maybe(Just))
+import Utils (Triple(Triple))
 
 day9Tests :: Effect Unit
 day9Tests = do

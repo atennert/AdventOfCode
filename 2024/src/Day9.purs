@@ -5,7 +5,7 @@ import Effect (Effect)
 import Node.Encoding (Encoding(UTF8))
 import Node.FS.Sync (readTextFile)
 import Effect.Console (log)
-import Utils (splitA, strToInt)
+import Utils (Triple(Triple), splitA, strToInt)
 import JS.BigInt (BigInt, fromInt)
 import Data.Maybe (Maybe(Just, Nothing))
 import Data.Array (foldl, snoc, unsnoc)
@@ -33,15 +33,11 @@ data Block =
     Data ID Len
   | Space Len
 type FS = Array Block
-data Triple a b c = Triple a b c
 
 instance Show Block where
     show (Data id len) = "Data (" <> show id <> ", " <> show len <> ")"
     show (Space len) = "Space (" <> show len <> ")"
 derive instance Eq Block
-instance (Show a, Show b, Show c) => Show (Triple a b c) where
-    show (Triple a b c) = "Triple (" <> show a <> ", " <> show b <> ", " <> show c <> ")"
-derive instance (Eq a, Eq b, Eq c) =>  Eq (Triple a b c)
 
 parse :: String -> FS
 parse input =
