@@ -15,6 +15,7 @@ import Day8 (day8)
 import Day9 (day9)
 import Day10 (day10)
 import Day11 (day11)
+import Day12 (day12)
 
 main :: Effect Unit
 main = do
@@ -29,3 +30,4 @@ main = do
   day9
   day10
   day11
+  day12

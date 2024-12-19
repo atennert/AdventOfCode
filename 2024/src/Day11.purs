@@ -14,6 +14,7 @@ import Data.Tuple (Tuple(Tuple), fst)
 import JS.Map.Primitive (Map, insert, lookup, empty)
 import JS.Map.Primitive.ST as STM
 import Data.Maybe (Maybe(Just, Nothing))
+import Data.Tuple.Nested (over1)
 
 day11 ∷ Effect Unit
 day11 = do
@@ -23,10 +24,10 @@ day11 = do
     log <<< show <<< day11_2 $ input
 
 day11_1 :: String -> BigInt
-day11_1 input = fst <<< foldl (\(Tuple b m) a -> onFst (+) b $ run 25 a m) (Tuple bi0 empty) <<< parse $ input
+day11_1 input = fst <<< foldl (\(Tuple b m) a -> over1 ((+) b) $ run 25 a m) (Tuple bi0 empty) <<< parse $ input
 
 day11_2 :: String -> BigInt
-day11_2 input = fst <<< foldl (\(Tuple b m) a -> onFst (+) b $ run 75 a m) (Tuple bi0 empty) <<< parse $ input
+day11_2 input = fst <<< foldl (\(Tuple b m) a -> over1 ((+) b) $ run 75 a m) (Tuple bi0 empty) <<< parse $ input
 
 
 parse :: String -> Array BigInt
@@ -35,9 +36,6 @@ parse input = map strToBigInt <<< splitA " " $ input
 bi0 = fromInt 0
 bi1 = fromInt 1
 bi2024 = fromInt 2024
-
-onFst :: forall a b. (a -> a -> a) -> a -> Tuple a b -> Tuple a b
-onFst f b' (Tuple b'' l'') = Tuple (f b' b'') l''
 
 type Log = Map String BigInt
 
@@ -55,7 +53,7 @@ run a bi l = case lookup (key a bi) l of
                                      lenX = S.length strX
                                      {before, after} = S.splitAt (lenX / 2) strX
                                      run'' s l' = run (a-1) (strToBigInt s) l'
-                                     run' (Tuple b' l') s = onFst (+) b' $ run'' s l'
+                                     run' (Tuple b' l') s = over1 ((+) b') $ run'' s l'
                                  in if even lenX
                                     then let (Tuple r l') = foldl run' (Tuple bi0 l) [before, after]
                                           in Tuple r $ insert (key a bi) r l'

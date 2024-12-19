@@ -9,7 +9,7 @@ import Data.List (concat, fromFoldable, length, updateAt, (!!), (..))
 import Data.String (split) as S
 import Data.String.Pattern (Pattern(..))
 import JS.BigInt (BigInt, fromString, fromInt) as B
-import Data.Array (length, uncons, (!!)) as A
+import Data.Array (length, uncons, updateAt, (!!)) as A
 
 
 data Triple a b c = Triple a b c
@@ -68,6 +68,15 @@ mark l (Tuple x y) e = case l !! y of
         Nothing -> l
     Nothing -> l
 
+markA :: forall a. Array (Array a) -> Tuple Int Int -> a -> Array (Array a)
+markA l (Tuple x y) e = case l A.!! y of
+    Just ly -> case A.updateAt x e ly of
+        Just newLy -> case A.updateAt y newLy l of
+            Just newL -> newL
+            Nothing -> l
+        Nothing -> l
+    Nothing -> l
+
 sizeRect :: forall a. List (List a) -> Tuple Int Int
 sizeRect Nil = Tuple 0 0
 sizeRect ll@(l:_) = Tuple (length l) (length ll)
@@ -79,5 +88,5 @@ sizeRectA arr = case A.uncons arr of
 
 isInRect :: forall a. List (List a) -> Tuple Int Int -> Boolean
 isInRect rect (Tuple x y) =
-    let (Tuple lenX lenY) = sizeRect rect
+    let Tuple lenX lenY = sizeRect rect
     in x >= 0 && x < lenX && y >= 0 && y < lenY
